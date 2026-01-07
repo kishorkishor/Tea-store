@@ -103,7 +103,7 @@ export default function ProductPreview({ formData, variants }: ProductPreviewPro
                                 Best Seller
                             </span>
                         )}
-                        {previewProduct.compareAtPrice && previewProduct.compareAtPrice > previewProduct.price && (
+                        {previewProduct.compareAtPrice && previewProduct.price !== undefined && previewProduct.compareAtPrice > previewProduct.price && (
                             <span className="px-3 py-1 bg-red-500 text-white text-xs font-medium rounded-full">
                                 Sale
                             </span>
