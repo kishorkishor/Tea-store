@@ -118,7 +118,7 @@ export default function ProductPreview({ formData, variants }: ProductPreviewPro
                 {/* Content */}
                 <div className="p-4">
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
-                        {previewProduct.category.replace('-', ' ') || 'Category'}
+                        {(previewProduct.category || 'Category').replace('-', ' ')}
                     </p>
                     <h3 className="font-display text-lg font-semibold text-foreground mb-2">
                         {previewProduct.name || 'Product Name'}
@@ -127,8 +127,8 @@ export default function ProductPreview({ formData, variants }: ProductPreviewPro
                         {previewProduct.shortDescription || 'Short description will appear here'}
                     </p>
                     <PriceDisplay
-                        price={previewProduct.price}
-                        compareAtPrice={previewProduct.compareAtPrice}
+                        price={productPrice}
+                        compareAtPrice={comparePrice}
                         size="sm"
                     />
                     {!previewProduct.inStock && (
