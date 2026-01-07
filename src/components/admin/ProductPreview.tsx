@@ -36,14 +36,18 @@ interface ProductPreviewProps {
 }
 
 export default function ProductPreview({ formData, variants }: ProductPreviewProps) {
+    // Extract price values with proper types
+    const productPrice = parseFloat(formData.price) || 0;
+    const comparePrice = formData.compare_at_price ? parseFloat(formData.compare_at_price) : undefined;
+    
     // Transform form data to Product-like structure for preview
     const previewProduct: Partial<Product> = {
         name: formData.name || 'Product Name',
         slug: formData.slug || 'product-slug',
         description: formData.description || '',
         shortDescription: formData.short_description || '',
-        price: parseFloat(formData.price) || 0,
-        compareAtPrice: formData.compare_at_price ? parseFloat(formData.compare_at_price) : undefined,
+        price: productPrice,
+        compareAtPrice: comparePrice,
         images: formData.images.length > 0 ? formData.images : ['/placeholder-product.jpg'],
         category: formData.category || '',
         collection: '',
@@ -103,7 +107,7 @@ export default function ProductPreview({ formData, variants }: ProductPreviewPro
                                 Best Seller
                             </span>
                         )}
-                        {previewProduct.compareAtPrice && previewProduct.price !== undefined && previewProduct.compareAtPrice > previewProduct.price && (
+                        {comparePrice && comparePrice > productPrice && (
                             <span className="px-3 py-1 bg-red-500 text-white text-xs font-medium rounded-full">
                                 Sale
                             </span>
