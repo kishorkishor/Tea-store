@@ -58,7 +58,7 @@ export default function QuantitySelector({
     return (
         <div
             className={cn(
-                'inline-flex items-center border border-gray-300 rounded-lg overflow-hidden',
+                'inline-flex items-center border border-border rounded-lg overflow-hidden',
                 disabled && 'opacity-50',
                 className
             )}
@@ -68,11 +68,11 @@ export default function QuantitySelector({
                 onClick={handleDecrement}
                 disabled={disabled || quantity <= min}
                 className={cn(
-                    'flex items-center justify-center bg-gray-50 text-gray-600',
-                    'hover:bg-gray-100 active:bg-gray-200',
+                    'flex items-center justify-center bg-muted text-foreground',
+                    'hover:bg-muted/80 active:bg-muted/60',
                     'disabled:opacity-50 disabled:cursor-not-allowed',
                     'transition-colors duration-150',
-                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-inset',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary focus-visible:ring-inset',
                     sizeStyles[size].button
                 )}
                 aria-label="Decrease quantity"
@@ -100,8 +100,8 @@ export default function QuantitySelector({
                 max={max}
                 disabled={disabled}
                 className={cn(
-                    'text-center border-x border-gray-300 bg-white',
-                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-inset',
+                    'text-center border-x border-border bg-card text-foreground',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary focus-visible:ring-inset',
                     '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
                     sizeStyles[size].input
                 )}
@@ -113,11 +113,11 @@ export default function QuantitySelector({
                 onClick={handleIncrement}
                 disabled={disabled || quantity >= max}
                 className={cn(
-                    'flex items-center justify-center bg-gray-50 text-gray-600',
-                    'hover:bg-gray-100 active:bg-gray-200',
+                    'flex items-center justify-center bg-muted text-foreground',
+                    'hover:bg-muted/80 active:bg-muted/60',
                     'disabled:opacity-50 disabled:cursor-not-allowed',
                     'transition-colors duration-150',
-                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-inset',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary focus-visible:ring-inset',
                     sizeStyles[size].button
                 )}
                 aria-label="Increase quantity"

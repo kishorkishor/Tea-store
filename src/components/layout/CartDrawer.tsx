@@ -62,7 +62,7 @@ export default function CartDrawer() {
             <div
                 ref={drawerRef}
                 className={cn(
-                    'fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50',
+                    'fixed top-0 right-0 h-full w-full max-w-md bg-card shadow-2xl z-50',
                     'transform transition-transform duration-300 ease-out',
                     'flex flex-col',
                     isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -72,13 +72,13 @@ export default function CartDrawer() {
                 aria-label="Shopping cart"
             >
                 {/* Header */}
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-                    <h2 className="font-display text-xl font-semibold text-gray-900">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+                    <h2 className="font-display text-xl font-semibold text-foreground">
                         Your Cart ({items.length})
                     </h2>
                     <button
                         onClick={() => setCartOpen(false)}
-                        className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
+                        className="p-2 text-muted-foreground hover:text-foreground rounded-full hover:bg-muted transition-colors"
                         aria-label="Close cart"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,15 +91,15 @@ export default function CartDrawer() {
                 <div className="flex-1 overflow-y-auto px-6 py-4">
                     {items.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-full text-center">
-                            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
+                                <svg className="w-12 h-12 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>
                             </div>
-                            <h3 className="font-display text-lg font-semibold text-gray-900 mb-2">
+                            <h3 className="font-display text-lg font-semibold text-foreground mb-2">
                                 Your cart is empty
                             </h3>
-                            <p className="text-gray-600 mb-6">
+                            <p className="text-muted-foreground mb-6">
                                 Looks like you haven&apos;t added any teas yet.
                             </p>
                             <Button onClick={() => setCartOpen(false)}>
@@ -111,10 +111,10 @@ export default function CartDrawer() {
                             {items.map((item) => (
                                 <li
                                     key={`${item.product.id}-${item.variant.id}`}
-                                    className="flex gap-4 p-4 bg-gray-50 rounded-xl"
+                                    className="flex gap-4 p-4 bg-muted rounded-xl"
                                 >
                                     {/* Product Image */}
-                                    <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-white">
+                                    <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-card border border-border">
                                         <Image
                                             src={item.product.images[0]}
                                             alt={item.product.name}
@@ -129,14 +129,14 @@ export default function CartDrawer() {
                                         <Link
                                             href={`/products/${item.product.slug}`}
                                             onClick={() => setCartOpen(false)}
-                                            className="font-medium text-gray-900 hover:text-primary-700 transition-colors line-clamp-1"
+                                            className="font-medium text-foreground hover:text-primary dark:hover:text-primary transition-colors line-clamp-1"
                                         >
                                             {item.product.name}
                                         </Link>
-                                        <p className="text-sm text-gray-500 mt-0.5">
+                                        <p className="text-sm text-muted-foreground mt-0.5">
                                             {item.variant.name}
                                         </p>
-                                        <p className="text-sm font-semibold text-primary-700 mt-1">
+                                        <p className="text-sm font-semibold text-primary mt-1">
                                             {formatPrice(item.variant.price)}
                                         </p>
 
@@ -166,31 +166,31 @@ export default function CartDrawer() {
 
                 {/* Footer - Only show if items exist */}
                 {items.length > 0 && (
-                    <div className="border-t border-gray-200 px-6 py-4 space-y-4">
+                    <div className="border-t border-border px-6 py-4 space-y-4">
                         {/* Totals */}
                         <div className="space-y-2">
                             <div className="flex justify-between text-sm">
-                                <span className="text-gray-600">Subtotal</span>
-                                <span className="font-medium">{formatPrice(subtotal)}</span>
+                                <span className="text-muted-foreground">Subtotal</span>
+                                <span className="font-medium text-foreground">{formatPrice(subtotal)}</span>
                             </div>
                             <div className="flex justify-between text-sm">
-                                <span className="text-gray-600">Shipping</span>
-                                <span className="font-medium">
+                                <span className="text-muted-foreground">Shipping</span>
+                                <span className="font-medium text-foreground">
                                     {shipping === 0 ? (
-                                        <span className="text-green-600">Free</span>
+                                        <span className="text-green-600 dark:text-green-400">Free</span>
                                     ) : (
                                         formatPrice(shipping)
                                     )}
                                 </span>
                             </div>
                             {subtotal < 1000 && (
-                                <p className="text-xs text-gray-500">
+                                <p className="text-xs text-muted-foreground">
                                     Add {formatPrice(1000 - subtotal)} more for free shipping!
                                 </p>
                             )}
-                            <div className="flex justify-between text-lg font-semibold pt-2 border-t border-gray-100">
-                                <span>Total</span>
-                                <span className="text-primary-700">{formatPrice(total)}</span>
+                            <div className="flex justify-between text-lg font-semibold pt-2 border-t border-border">
+                                <span className="text-foreground">Total</span>
+                                <span className="text-primary">{formatPrice(total)}</span>
                             </div>
                         </div>
 

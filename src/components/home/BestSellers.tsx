@@ -15,16 +15,16 @@ export default function BestSellers() {
                         <span className="text-secondary-600 font-medium text-sm uppercase tracking-wider">
                             Customer Favorites
                         </span>
-                        <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mt-2">
+                        <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
                             Best Sellers
                         </h2>
-                        <p className="text-gray-600 mt-2 max-w-xl">
+                        <p className="text-muted-foreground mt-2 max-w-xl">
                             Our most loved teas, chosen by tea enthusiasts across Bangladesh.
                         </p>
                     </div>
                     <Link
                         href="/collections"
-                        className="inline-flex items-center gap-2 text-primary-700 font-medium hover:text-primary-800 transition-colors whitespace-nowrap"
+                        className="inline-flex items-center gap-2 text-primary-700 dark:text-primary font-medium hover:text-primary-800 dark:hover:text-primary/80 transition-colors whitespace-nowrap"
                     >
                         View All Products
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

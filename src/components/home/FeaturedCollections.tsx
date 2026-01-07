@@ -7,17 +7,17 @@ export default function FeaturedCollections() {
     const featuredCollections = collections.slice(0, 4);
 
     return (
-        <section className="py-16 md:py-24 bg-cream-50">
+        <section className="py-16 md:py-24 bg-cream-50 dark:bg-muted/30">
             <div className="container-custom">
                 {/* Section Header */}
                 <div className="text-center mb-12">
-                    <span className="text-secondary-600 font-medium text-sm uppercase tracking-wider">
+                    <span className="text-secondary-600 dark:text-secondary font-medium text-sm uppercase tracking-wider">
                         Explore Our Range
                     </span>
-                    <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mt-2">
+                    <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
                         Tea Collections
                     </h2>
-                    <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+                    <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
                         From energizing green teas to soothing herbal blends, find your perfect cup
                         in our curated collections.
                     </p>
@@ -72,7 +72,7 @@ export default function FeaturedCollections() {
                 <div className="text-center mt-10">
                     <Link
                         href="/collections"
-                        className="inline-flex items-center gap-2 text-primary-700 font-medium hover:text-primary-800 transition-colors"
+                        className="inline-flex items-center gap-2 text-primary-700 dark:text-primary font-medium hover:text-primary-800 dark:hover:text-primary/80 transition-colors"
                     >
                         View All Collections
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

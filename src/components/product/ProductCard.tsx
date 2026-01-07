@@ -27,8 +27,8 @@ export default function ProductCard({ product, className }: ProductCardProps) {
         <Link
             href={`/products/${product.slug}`}
             className={cn(
-                'group block bg-white rounded-2xl overflow-hidden shadow-sm',
-                'border border-gray-100',
+                'group block bg-card rounded-2xl overflow-hidden shadow-sm',
+                'border border-border',
                 'card-hover',
                 className
             )}
@@ -73,17 +73,17 @@ export default function ProductCard({ product, className }: ProductCardProps) {
             {/* Content */}
             <div className="p-4">
                 {/* Category */}
-                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
                     {product.category.replace('-', ' ')}
                 </p>
 
                 {/* Name */}
-                <h3 className="font-display text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary-700 transition-colors line-clamp-1">
+                <h3 className="font-display text-lg font-semibold text-foreground mb-2 group-hover:text-primary-700 dark:group-hover:text-primary-400 transition-colors line-clamp-1">
                     {product.name}
                 </h3>
 
                 {/* Short Description */}
-                <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                     {product.shortDescription}
                 </p>
 
@@ -104,7 +104,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
                                     'w-4 h-4',
                                     i < Math.floor(product.rating)
                                         ? 'text-secondary-500'
-                                        : 'text-gray-300'
+                                        : 'text-muted-foreground/40'
                                 )}
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
@@ -113,7 +113,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
                             </svg>
                         ))}
                     </div>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-muted-foreground">
                         ({product.reviewCount})
                     </span>
                 </div>

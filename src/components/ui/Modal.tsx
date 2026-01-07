@@ -86,7 +86,7 @@ export default function Modal({
                 ref={modalRef}
                 tabIndex={-1}
                 className={cn(
-                    'relative w-full bg-white rounded-2xl shadow-xl',
+                    'relative w-full bg-card dark:bg-card rounded-2xl shadow-xl',
                     'animate-scale-in',
                     'focus:outline-none',
                     sizeStyles[size],
@@ -95,16 +95,16 @@ export default function Modal({
             >
                 {/* Header */}
                 {title && (
-                    <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-border">
                         <h2
                             id="modal-title"
-                            className="text-xl font-display font-semibold text-gray-900"
+                            className="text-xl font-display font-semibold text-foreground"
                         >
                             {title}
                         </h2>
                         <button
                             onClick={onClose}
-                            className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
+                            className="p-2 text-muted-foreground hover:text-foreground rounded-full hover:bg-muted transition-colors"
                             aria-label="Close modal"
                         >
                             <svg
@@ -129,7 +129,7 @@ export default function Modal({
                     {!title && (
                         <button
                             onClick={onClose}
-                            className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
+                            className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground rounded-full hover:bg-muted transition-colors"
                             aria-label="Close modal"
                         >
                             <svg

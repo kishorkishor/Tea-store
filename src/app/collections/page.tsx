@@ -14,10 +14,10 @@ export default function CollectionsPage() {
             <div className="container-custom">
                 {/* Header */}
                 <div className="text-center mb-12">
-                    <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
                         Our Tea Collections
                     </h1>
-                    <p className="text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-muted-foreground max-w-2xl mx-auto">
                         Explore our carefully curated tea collections, each crafted to deliver
                         unique flavors and experiences. From energizing mornings to peaceful evenings.
                     </p>

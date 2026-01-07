@@ -63,7 +63,7 @@ export default function ShippingPage() {
                         </div>
 
                         <div className="bg-secondary-50 p-6 rounded-xl my-8">
-                            <p className="text-secondary-800 font-medium mb-2">🎁 Free Shipping</p>
+                            <p className="text-secondary-800 font-medium mb-2">Free Shipping</p>
                             <p className="text-gray-700">
                                 Enjoy free shipping on all orders over ৳1,000 within Dhaka City.
                                 For other areas, a flat shipping rate applies.

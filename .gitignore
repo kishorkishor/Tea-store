@@ -39,3 +39,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# documentation and setup files
+*.md
+!README.md
+setup-env.ps1
+ENV_SETUP.md
+SETUP_INSTRUCTIONS.md
+FIX_RLS_ERROR.md
+PROPER_RLS_FIX.md
+URGENT_FIX.md
+
+# netlify
+.netlify
+
+# zip files
+*.zip

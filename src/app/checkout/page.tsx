@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
-import { createOrderPlaceholder } from '@/lib/services/orders';
+import { createOrder } from '@/lib/services/orders';
 import { CustomerInfo, ShippingAddress, PaymentMethod } from '@/types';
 import { formatPrice, cn } from '@/lib/utils';
 import Input from '@/components/ui/Input';
@@ -25,9 +25,9 @@ const districtOptions = [
 ];
 
 const paymentMethods: { id: PaymentMethod; name: string; description: string; icon: string }[] = [
-    { id: 'cod', name: 'Cash on Delivery', description: 'Pay when you receive your order', icon: '💵' },
-    { id: 'bkash', name: 'bKash', description: 'Pay via bKash mobile wallet', icon: '📱' },
-    { id: 'card', name: 'Credit/Debit Card', description: 'Visa, Mastercard, Amex', icon: '💳' },
+    { id: 'cod', name: 'Cash on Delivery', description: 'Pay when you receive your order', icon: 'cash' },
+    { id: 'bkash', name: 'bKash', description: 'Pay via bKash mobile wallet', icon: 'mobile' },
+    { id: 'card', name: 'Credit/Debit Card', description: 'Visa, Mastercard, Amex', icon: 'card' },
 ];
 
 export default function CheckoutPage() {
@@ -91,7 +91,7 @@ export default function CheckoutPage() {
 
         try {
             // TODO: Replace with actual payment processing
-            const order = await createOrderPlaceholder({
+            const order = await createOrder({
                 customer: customerInfo,
                 shippingAddress,
                 items,
@@ -116,10 +116,10 @@ export default function CheckoutPage() {
         return (
             <div className="py-12 md:py-16">
                 <div className="container-custom text-center">
-                    <h1 className="font-display text-3xl font-bold text-gray-900 mb-4">
+                    <h1 className="font-display text-3xl font-bold text-foreground mb-4">
                         Your cart is empty
                     </h1>
-                    <p className="text-gray-600 mb-8">Add some products before checking out.</p>
+                    <p className="text-muted-foreground mb-8">Add some products before checking out.</p>
                     <Link href="/collections">
                         <Button>Browse Collections</Button>
                     </Link>
@@ -134,11 +134,11 @@ export default function CheckoutPage() {
                 {/* Breadcrumb */}
                 <nav className="mb-8 text-sm" aria-label="Breadcrumb">
                     <ol className="flex items-center gap-2">
-                        <li><Link href="/" className="text-gray-500 hover:text-primary-700">Home</Link></li>
-                        <li className="text-gray-400">/</li>
-                        <li><Link href="/cart" className="text-gray-500 hover:text-primary-700">Cart</Link></li>
-                        <li className="text-gray-400">/</li>
-                        <li className="text-gray-900">Checkout</li>
+                        <li><Link href="/" className="text-muted-foreground hover:text-primary-700 dark:hover:text-primary">Home</Link></li>
+                        <li className="text-muted-foreground">/</li>
+                        <li><Link href="/cart" className="text-muted-foreground hover:text-primary-700 dark:hover:text-primary">Cart</Link></li>
+                        <li className="text-muted-foreground">/</li>
+                        <li className="text-foreground">Checkout</li>
                     </ol>
                 </nav>
 
@@ -148,21 +148,21 @@ export default function CheckoutPage() {
                         <div key={label} className="flex items-center">
                             <div className={cn(
                                 'flex items-center justify-center w-8 h-8 rounded-full font-medium text-sm',
-                                step > index + 1 ? 'bg-primary-600 text-white' :
-                                    step === index + 1 ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-600'
+                                step > index + 1 ? 'bg-primary-600 dark:bg-primary text-white dark:text-primary-foreground' :
+                                    step === index + 1 ? 'bg-primary-600 dark:bg-primary text-white dark:text-primary-foreground' : 'bg-gray-200 dark:bg-muted text-gray-600 dark:text-muted-foreground'
                             )}>
                                 {step > index + 1 ? '✓' : index + 1}
                             </div>
                             <span className={cn(
                                 'ml-2 text-sm hidden sm:inline',
-                                step === index + 1 ? 'text-gray-900 font-medium' : 'text-gray-500'
+                                step === index + 1 ? 'text-foreground font-medium' : 'text-muted-foreground'
                             )}>
                                 {label}
                             </span>
                             {index < 2 && (
                                 <div className={cn(
                                     'w-12 sm:w-24 h-0.5 mx-4',
-                                    step > index + 1 ? 'bg-primary-600' : 'bg-gray-200'
+                                    step > index + 1 ? 'bg-primary-600 dark:bg-primary' : 'bg-gray-200 dark:bg-muted'
                                 )} />
                             )}
                         </div>
@@ -175,7 +175,7 @@ export default function CheckoutPage() {
                         {/* Step 1: Customer Info */}
                         {step === 1 && (
                             <div className="animate-fade-in">
-                                <h2 className="font-display text-2xl font-semibold text-gray-900 mb-6">
+                                <h2 className="font-display text-2xl font-semibold text-foreground mb-6">
                                     Customer Information
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -225,7 +225,7 @@ export default function CheckoutPage() {
                         {/* Step 2: Shipping */}
                         {step === 2 && (
                             <div className="animate-fade-in">
-                                <h2 className="font-display text-2xl font-semibold text-gray-900 mb-6">
+                                <h2 className="font-display text-2xl font-semibold text-foreground mb-6">
                                     Shipping Address
                                 </h2>
                                 <div className="space-y-4">
@@ -285,41 +285,56 @@ export default function CheckoutPage() {
                         {/* Step 3: Payment */}
                         {step === 3 && (
                             <div className="animate-fade-in">
-                                <h2 className="font-display text-2xl font-semibold text-gray-900 mb-6">
+                                <h2 className="font-display text-2xl font-semibold text-foreground mb-6">
                                     Payment Method
                                 </h2>
                                 <div className="space-y-3">
-                                    {paymentMethods.map((method) => (
-                                        <button
-                                            key={method.id}
-                                            onClick={() => setPaymentMethod(method.id)}
-                                            className={cn(
-                                                'w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4',
-                                                paymentMethod === method.id
-                                                    ? 'border-primary-600 bg-primary-50'
-                                                    : 'border-gray-200 hover:border-gray-300'
-                                            )}
-                                        >
-                                            <span className="text-3xl">{method.icon}</span>
-                                            <div className="flex-1">
-                                                <div className="font-medium text-gray-900">{method.name}</div>
-                                                <div className="text-sm text-gray-500">{method.description}</div>
-                                            </div>
-                                            <div className={cn(
-                                                'w-5 h-5 rounded-full border-2 flex items-center justify-center',
-                                                paymentMethod === method.id ? 'border-primary-600' : 'border-gray-300'
-                                            )}>
-                                                {paymentMethod === method.id && (
-                                                    <div className="w-2.5 h-2.5 rounded-full bg-primary-600" />
+                                    {paymentMethods.map((method) => {
+                                        const iconMap: Record<string, React.ReactNode> = {
+                                            cash: (
+                                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                            ),
+                                            mobile: (
+                                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                                            ),
+                                            card: (
+                                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                                            ),
+                                        };
+                                        return (
+                                            <button
+                                                key={method.id}
+                                                onClick={() => setPaymentMethod(method.id)}
+                                                className={cn(
+                                                    'w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4',
+                                                    paymentMethod === method.id
+                                                        ? 'border-primary-600 bg-primary-50 dark:bg-muted'
+                                                        : 'border-border hover:border-primary-400'
                                                 )}
-                                            </div>
-                                        </button>
-                                    ))}
+                                            >
+                                                <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center text-primary-600">
+                                                    {iconMap[method.icon]}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <div className="font-medium text-foreground">{method.name}</div>
+                                                    <div className="text-sm text-muted-foreground">{method.description}</div>
+                                                </div>
+                                                <div className={cn(
+                                                    'w-5 h-5 rounded-full border-2 flex items-center justify-center',
+                                                    paymentMethod === method.id ? 'border-primary-600' : 'border-muted-foreground/50'
+                                                )}>
+                                                    {paymentMethod === method.id && (
+                                                        <div className="w-2.5 h-2.5 rounded-full bg-primary-600" />
+                                                    )}
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
                                 </div>
 
                                 {/* Payment Notice */}
-                                <div className="mt-6 p-4 bg-secondary-50 rounded-xl text-sm text-gray-700">
-                                    <p className="font-medium text-secondary-800 mb-1">🔒 Secure Payment</p>
+                                <div className="mt-6 p-4 bg-secondary-50 dark:bg-secondary/20 rounded-xl text-sm text-foreground">
+                                    <p className="font-medium text-secondary-800 dark:text-secondary mb-1">Secure Payment</p>
                                     {paymentMethod === 'cod' && (
                                         <p>You will pay {formatPrice(total)} when your order is delivered.</p>
                                     )}
@@ -349,8 +364,8 @@ export default function CheckoutPage() {
 
                     {/* Order Summary Sidebar */}
                     <div className="lg:col-span-1">
-                        <div className="bg-gray-50 rounded-2xl p-6 sticky top-24">
-                            <h3 className="font-display text-lg font-semibold text-gray-900 mb-4">
+                        <div className="bg-gray-50 dark:bg-muted rounded-2xl p-6 sticky top-24">
+                            <h3 className="font-display text-lg font-semibold text-foreground mb-4">
                                 Order Summary
                             </h3>
 
@@ -358,7 +373,7 @@ export default function CheckoutPage() {
                             <div className="space-y-3 mb-4 max-h-64 overflow-y-auto">
                                 {items.map((item) => (
                                     <div key={`${item.product.id}-${item.variant.id}`} className="flex gap-3">
-                                        <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-white">
+                                        <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-card">
                                             <Image
                                                 src={item.product.images[0]}
                                                 alt={item.product.name}
@@ -371,9 +386,9 @@ export default function CheckoutPage() {
                                             </span>
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-medium text-sm text-gray-900 truncate">{item.product.name}</p>
-                                            <p className="text-xs text-gray-500">{item.variant.name}</p>
-                                            <p className="text-sm font-medium text-primary-700 mt-1">
+                                            <p className="font-medium text-sm text-foreground truncate">{item.product.name}</p>
+                                            <p className="text-xs text-muted-foreground">{item.variant.name}</p>
+                                            <p className="text-sm font-medium text-primary-700 dark:text-primary mt-1">
                                                 {formatPrice(item.variant.price * item.quantity)}
                                             </p>
                                         </div>
@@ -382,16 +397,16 @@ export default function CheckoutPage() {
                             </div>
 
                             {/* Totals */}
-                            <div className="border-t border-gray-200 pt-4 space-y-2 text-sm">
+                            <div className="border-t border-border pt-4 space-y-2 text-sm">
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600">Subtotal</span>
-                                    <span>{formatPrice(subtotal)}</span>
+                                    <span className="text-muted-foreground">Subtotal</span>
+                                    <span className="text-foreground">{formatPrice(subtotal)}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600">Shipping</span>
-                                    <span>{shipping === 0 ? <span className="text-green-600">Free</span> : formatPrice(shipping)}</span>
+                                    <span className="text-muted-foreground">Shipping</span>
+                                    <span className="text-foreground">{shipping === 0 ? <span className="text-green-600 dark:text-green-400">Free</span> : formatPrice(shipping)}</span>
                                 </div>
-                                <div className="flex justify-between text-lg font-semibold pt-2 border-t border-gray-200">
+                                <div className="flex justify-between text-lg font-semibold pt-2 border-t border-border">
                                     <span>Total</span>
                                     <span className="text-primary-700">{formatPrice(total)}</span>
                                 </div>

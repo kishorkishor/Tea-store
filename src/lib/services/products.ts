@@ -1,88 +1,180 @@
-import { products } from '@/data/products';
-import { Product, ProductFilters } from '@/types';
+import { supabase } from '@/lib/supabase';
+import { Product, ProductFilters, ProductVariant } from '@/types';
+
+// Transform database product to frontend Product type
+function transformProduct(dbProduct: any, variants: ProductVariant[]): Product {
+    return {
+        id: dbProduct.id,
+        slug: dbProduct.slug,
+        name: dbProduct.name,
+        description: dbProduct.description || '',
+        shortDescription: dbProduct.short_description || '',
+        price: parseFloat(dbProduct.price),
+        compareAtPrice: dbProduct.compare_at_price ? parseFloat(dbProduct.compare_at_price) : undefined,
+        images: dbProduct.images || [],
+        category: dbProduct.category,
+        collection: dbProduct.collection_id || '',
+        tags: dbProduct.tags || [],
+        variants: variants,
+        inStock: dbProduct.in_stock,
+        isFeatured: dbProduct.is_featured,
+        isBestSeller: dbProduct.is_best_seller,
+        brewingInstructions: {
+            temperature: dbProduct.brewing_temperature || '',
+            steepTime: dbProduct.brewing_steep_time || '',
+            amount: dbProduct.brewing_amount || '',
+        },
+        ingredients: dbProduct.ingredients || [],
+        origin: dbProduct.origin || '',
+        caffeineLevel: dbProduct.caffeine_level as 'none' | 'low' | 'medium' | 'high',
+        rating: parseFloat(dbProduct.rating || '0'),
+        reviewCount: dbProduct.review_count || 0,
+        createdAt: dbProduct.created_at,
+    };
+}
 
 /**
  * Get all products
- * TODO: Replace with Supabase fetch
- * Example: const { data } = await supabase.from('products').select('*')
  */
 export async function getProducts(filters?: ProductFilters): Promise<Product[]> {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 100));
+    let query = supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    let filteredProducts = [...products];
-
+    // Apply filters
     if (filters) {
-        // Filter by collection
         if (filters.collection) {
-            filteredProducts = filteredProducts.filter(p => p.collection === filters.collection);
+            const { data: collection } = await supabase
+                .from('collections')
+                .select('id')
+                .eq('slug', filters.collection)
+                .single();
+            
+            if (collection) {
+                query = query.eq('collection_id', collection.id);
+            }
         }
 
-        // Filter by category
         if (filters.category) {
-            filteredProducts = filteredProducts.filter(p => p.category === filters.category);
+            query = query.eq('category', filters.category);
         }
 
-        // Filter by price range
+        if (filters.inStock !== undefined) {
+            query = query.eq('in_stock', filters.inStock);
+        }
+
+        if (filters.caffeineLevel && filters.caffeineLevel.length > 0) {
+            query = query.in('caffeine_level', filters.caffeineLevel);
+        }
+    }
+
+    const { data: products, error } = await query;
+
+    if (error) {
+        console.error('Error fetching products:', error);
+        return [];
+    }
+
+    if (!products || products.length === 0) {
+        return [];
+    }
+
+    // Get variants for all products
+    const productIds = products.map(p => p.id);
+    const { data: variants } = await supabase
+        .from('product_variants')
+        .select('*')
+        .in('product_id', productIds);
+
+    // Group variants by product
+    const variantsByProduct = new Map<string, ProductVariant[]>();
+    variants?.forEach((v: any) => {
+        if (!variantsByProduct.has(v.product_id)) {
+            variantsByProduct.set(v.product_id, []);
+        }
+        variantsByProduct.get(v.product_id)!.push({
+            id: v.id,
+            name: v.name,
+            weight: v.weight,
+            price: parseFloat(v.price),
+            compareAtPrice: v.compare_at_price ? parseFloat(v.compare_at_price) : undefined,
+        });
+    });
+
+    // Transform products
+    let transformedProducts = products.map((p: any) => {
+        const productVariants = variantsByProduct.get(p.id) || [];
+        return transformProduct(p, productVariants);
+    });
+
+    // Apply client-side filters that can't be done in DB
+    if (filters) {
         if (filters.priceRange) {
             const [min, max] = filters.priceRange;
-            filteredProducts = filteredProducts.filter(p => p.price >= min && p.price <= max);
-        }
-
-        // Filter by caffeine level
-        if (filters.caffeineLevel && filters.caffeineLevel.length > 0) {
-            filteredProducts = filteredProducts.filter(p =>
-                filters.caffeineLevel!.includes(p.caffeineLevel)
-            );
-        }
-
-        // Filter by stock
-        if (filters.inStock !== undefined) {
-            filteredProducts = filteredProducts.filter(p => p.inStock === filters.inStock);
+            transformedProducts = transformedProducts.filter(p => p.price >= min && p.price <= max);
         }
 
         // Sort
         if (filters.sortBy) {
             switch (filters.sortBy) {
                 case 'price-asc':
-                    filteredProducts.sort((a, b) => a.price - b.price);
+                    transformedProducts.sort((a, b) => a.price - b.price);
                     break;
                 case 'price-desc':
-                    filteredProducts.sort((a, b) => b.price - a.price);
+                    transformedProducts.sort((a, b) => b.price - a.price);
                     break;
                 case 'name':
-                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    transformedProducts.sort((a, b) => a.name.localeCompare(b.name));
                     break;
                 case 'newest':
-                    filteredProducts.sort((a, b) =>
+                    transformedProducts.sort((a, b) =>
                         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
                     );
                     break;
                 case 'rating':
-                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    transformedProducts.sort((a, b) => b.rating - a.rating);
                     break;
             }
         }
     }
 
-    return filteredProducts;
+    return transformedProducts;
 }
 
 /**
  * Get a single product by slug
- * TODO: Replace with Supabase fetch
- * Example: const { data } = await supabase.from('products').select('*').eq('slug', slug).single()
  */
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const { data: product, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('slug', slug)
+        .single();
 
-    const product = products.find(p => p.slug === slug);
-    return product || null;
+    if (error || !product) {
+        return null;
+    }
+
+    // Get variants
+    const { data: variants } = await supabase
+        .from('product_variants')
+        .select('*')
+        .eq('product_id', product.id);
+
+    const transformedVariants: ProductVariant[] = (variants || []).map((v: any) => ({
+        id: v.id,
+        name: v.name,
+        weight: v.weight,
+        price: parseFloat(v.price),
+        compareAtPrice: v.compare_at_price ? parseFloat(v.compare_at_price) : undefined,
+    }));
+
+    return transformProduct(product, transformedVariants);
 }
 
 /**
  * Get products by collection
- * TODO: Replace with Supabase fetch
  */
 export async function getProductsByCollection(collectionSlug: string): Promise<Product[]> {
     return getProducts({ collection: collectionSlug });
@@ -90,37 +182,125 @@ export async function getProductsByCollection(collectionSlug: string): Promise<P
 
 /**
  * Get featured products
- * TODO: Replace with Supabase fetch
- * Example: const { data } = await supabase.from('products').select('*').eq('is_featured', true)
  */
 export async function getFeaturedProducts(): Promise<Product[]> {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const { data: products, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('is_featured', true)
+        .order('created_at', { ascending: false })
+        .limit(8);
 
-    return products.filter(p => p.isFeatured);
+    if (error || !products) {
+        return [];
+    }
+
+    // Get variants
+    const productIds = products.map(p => p.id);
+    const { data: variants } = await supabase
+        .from('product_variants')
+        .select('*')
+        .in('product_id', productIds);
+
+    const variantsByProduct = new Map<string, ProductVariant[]>();
+    variants?.forEach((v: any) => {
+        if (!variantsByProduct.has(v.product_id)) {
+            variantsByProduct.set(v.product_id, []);
+        }
+        variantsByProduct.get(v.product_id)!.push({
+            id: v.id,
+            name: v.name,
+            weight: v.weight,
+            price: parseFloat(v.price),
+            compareAtPrice: v.compare_at_price ? parseFloat(v.compare_at_price) : undefined,
+        });
+    });
+
+    return products.map((p: any) => {
+        const productVariants = variantsByProduct.get(p.id) || [];
+        return transformProduct(p, productVariants);
+    });
 }
 
 /**
  * Get best-selling products
- * TODO: Replace with Supabase fetch
- * Example: const { data } = await supabase.from('products').select('*').eq('is_best_seller', true)
  */
 export async function getBestSellers(): Promise<Product[]> {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const { data: products, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('is_best_seller', true)
+        .order('created_at', { ascending: false })
+        .limit(8);
 
-    return products.filter(p => p.isBestSeller);
+    if (error || !products) {
+        return [];
+    }
+
+    // Get variants
+    const productIds = products.map(p => p.id);
+    const { data: variants } = await supabase
+        .from('product_variants')
+        .select('*')
+        .in('product_id', productIds);
+
+    const variantsByProduct = new Map<string, ProductVariant[]>();
+    variants?.forEach((v: any) => {
+        if (!variantsByProduct.has(v.product_id)) {
+            variantsByProduct.set(v.product_id, []);
+        }
+        variantsByProduct.get(v.product_id)!.push({
+            id: v.id,
+            name: v.name,
+            weight: v.weight,
+            price: parseFloat(v.price),
+            compareAtPrice: v.compare_at_price ? parseFloat(v.compare_at_price) : undefined,
+        });
+    });
+
+    return products.map((p: any) => {
+        const productVariants = variantsByProduct.get(p.id) || [];
+        return transformProduct(p, productVariants);
+    });
 }
 
 /**
  * Search products
- * TODO: Replace with Supabase full-text search
  */
 export async function searchProducts(query: string): Promise<Product[]> {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const { data: products, error } = await supabase
+        .from('products')
+        .select('*')
+        .or(`name.ilike.%${query}%,description.ilike.%${query}%`)
+        .limit(20);
 
-    const lowerQuery = query.toLowerCase();
-    return products.filter(p =>
-        p.name.toLowerCase().includes(lowerQuery) ||
-        p.description.toLowerCase().includes(lowerQuery) ||
-        p.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
-    );
+    if (error || !products) {
+        return [];
+    }
+
+    // Get variants
+    const productIds = products.map(p => p.id);
+    const { data: variants } = await supabase
+        .from('product_variants')
+        .select('*')
+        .in('product_id', productIds);
+
+    const variantsByProduct = new Map<string, ProductVariant[]>();
+    variants?.forEach((v: any) => {
+        if (!variantsByProduct.has(v.product_id)) {
+            variantsByProduct.set(v.product_id, []);
+        }
+        variantsByProduct.get(v.product_id)!.push({
+            id: v.id,
+            name: v.name,
+            weight: v.weight,
+            price: parseFloat(v.price),
+            compareAtPrice: v.compare_at_price ? parseFloat(v.compare_at_price) : undefined,
+        });
+    });
+
+    return products.map((p: any) => {
+        const productVariants = variantsByProduct.get(p.id) || [];
+        return transformProduct(p, productVariants);
+    });
 }

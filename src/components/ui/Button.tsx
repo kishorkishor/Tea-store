@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md' | 'lg' | 'icon';
     isLoading?: boolean;
     fullWidth?: boolean;
 }
@@ -32,29 +32,29 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
         const variants = {
             primary: `
-        bg-primary-700 text-white
-        hover:bg-primary-800 active:bg-primary-900
-        focus-visible:ring-primary-500
+        bg-primary-700 text-white dark:bg-primary dark:text-primary-foreground
+        hover:bg-primary-800 dark:hover:bg-primary/90 active:bg-primary-900 dark:active:bg-primary/80
+        focus-visible:ring-primary-500 dark:focus-visible:ring-primary
       `,
             secondary: `
-        bg-secondary-500 text-white
-        hover:bg-secondary-600 active:bg-secondary-700
-        focus-visible:ring-secondary-400
+        bg-secondary-500 text-white dark:bg-secondary dark:text-secondary-foreground
+        hover:bg-secondary-600 dark:hover:bg-secondary/90 active:bg-secondary-700 dark:active:bg-secondary/80
+        focus-visible:ring-secondary-400 dark:focus-visible:ring-secondary
       `,
             outline: `
-        border-2 border-primary-700 text-primary-700
-        hover:bg-primary-50 active:bg-primary-100
-        focus-visible:ring-primary-500
+        border-2 border-primary-700 dark:border-primary text-primary-700 dark:text-primary
+        hover:bg-primary-50 dark:hover:bg-muted active:bg-primary-100 dark:active:bg-muted/80
+        focus-visible:ring-primary-500 dark:focus-visible:ring-primary
       `,
             ghost: `
-        text-primary-700
-        hover:bg-primary-50 active:bg-primary-100
-        focus-visible:ring-primary-500
+        text-primary-700 dark:text-foreground
+        hover:bg-primary-50 dark:hover:bg-muted active:bg-primary-100 dark:active:bg-muted/80
+        focus-visible:ring-primary-500 dark:focus-visible:ring-primary
       `,
             danger: `
-        bg-red-600 text-white
-        hover:bg-red-700 active:bg-red-800
-        focus-visible:ring-red-500
+        bg-red-600 text-white dark:bg-destructive dark:text-destructive-foreground
+        hover:bg-red-700 dark:hover:bg-destructive/90 active:bg-red-800 dark:active:bg-destructive/80
+        focus-visible:ring-red-500 dark:focus-visible:ring-destructive
       `,
         };
 
@@ -62,6 +62,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             sm: 'px-3 py-1.5 text-sm gap-1.5',
             md: 'px-5 py-2.5 text-base gap-2',
             lg: 'px-7 py-3.5 text-lg gap-2.5',
+            icon: 'h-9 w-9 p-0',
         };
 
         return (

@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
+import { Leaf, Handshake, Sparkles, Heart } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'About Us',
@@ -10,22 +11,22 @@ export const metadata: Metadata = {
 
 const values = [
     {
-        icon: '🌱',
+        icon: 'leaf',
         title: 'Sustainability',
         description: 'We partner with tea gardens that practice sustainable farming methods.',
     },
     {
-        icon: '🤝',
+        icon: 'handshake',
         title: 'Fair Trade',
         description: 'Our farmers receive fair wages and work in safe conditions.',
     },
     {
-        icon: '✨',
+        icon: 'sparkles',
         title: 'Quality First',
         description: 'Every batch is carefully tested for taste, aroma, and purity.',
     },
     {
-        icon: '💚',
+        icon: 'heart',
         title: 'Community',
         description: 'We reinvest in local communities and support education initiatives.',
     },
@@ -71,13 +72,13 @@ export default function AboutPage() {
                             />
                         </div>
                         <div>
-                            <span className="text-secondary-600 font-medium text-sm uppercase tracking-wider">
+                            <span className="text-secondary-600 dark:text-secondary font-medium text-sm uppercase tracking-wider">
                                 Our Mission
                             </span>
-                            <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-6">
+                            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-6">
                                 Connecting Tea Lovers with Nature&apos;s Best
                             </h2>
-                            <div className="space-y-4 text-gray-700">
+                            <div className="space-y-4 text-foreground/90">
                                 <p>
                                     At ChaiBari, we believe that great tea tells a story. It speaks of the land
                                     where it was grown, the hands that picked it, and the tradition that shaped it.
@@ -99,24 +100,34 @@ export default function AboutPage() {
             </section>
 
             {/* Values */}
-            <section className="py-16 md:py-24 bg-cream-100">
+            <section className="py-16 md:py-24 bg-cream-100 dark:bg-muted/30">
                 <div className="container-custom">
                     <div className="text-center mb-12">
-                        <span className="text-secondary-600 font-medium text-sm uppercase tracking-wider">
+                        <span className="text-secondary-600 dark:text-secondary font-medium text-sm uppercase tracking-wider">
                             What We Stand For
                         </span>
-                        <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mt-2">
+                        <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
                             Our Values
                         </h2>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {values.map((value, index) => (
-                            <div key={index} className="bg-white p-6 rounded-2xl text-center card-hover">
-                                <div className="text-4xl mb-4">{value.icon}</div>
-                                <h3 className="font-semibold text-gray-900 mb-2">{value.title}</h3>
-                                <p className="text-sm text-gray-600">{value.description}</p>
-                            </div>
-                        ))}
+                        {values.map((value, index) => {
+                            const iconMap: Record<string, React.ReactNode> = {
+                                leaf: <Leaf className="w-8 h-8 text-primary-600 dark:text-primary" />,
+                                handshake: <Handshake className="w-8 h-8 text-primary-600 dark:text-primary" />,
+                                sparkles: <Sparkles className="w-8 h-8 text-primary-600 dark:text-primary" />,
+                                heart: <Heart className="w-8 h-8 text-primary-600 dark:text-primary" />,
+                            };
+                            return (
+                                <div key={index} className="bg-card p-6 rounded-2xl text-center card-hover border border-border">
+                                    <div className="w-14 h-14 mx-auto mb-4 bg-primary-50 dark:bg-muted rounded-full flex items-center justify-center">
+                                        {iconMap[value.icon]}
+                                    </div>
+                                    <h3 className="font-semibold text-foreground mb-2">{value.title}</h3>
+                                    <p className="text-sm text-muted-foreground">{value.description}</p>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
@@ -125,17 +136,17 @@ export default function AboutPage() {
             <section className="py-16 md:py-24">
                 <div className="container-custom">
                     <div className="text-center mb-12">
-                        <span className="text-secondary-600 font-medium text-sm uppercase tracking-wider">
+                        <span className="text-secondary-600 dark:text-secondary font-medium text-sm uppercase tracking-wider">
                             The People Behind ChaiBari
                         </span>
-                        <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mt-2">
+                        <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
                             Meet Our Team
                         </h2>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
                         {team.map((member, index) => (
                             <div key={index} className="text-center">
-                                <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                                <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-2 border-border">
                                     <Image
                                         src={member.image}
                                         alt={member.name}
@@ -143,8 +154,8 @@ export default function AboutPage() {
                                         className="object-cover"
                                     />
                                 </div>
-                                <h3 className="font-semibold text-gray-900">{member.name}</h3>
-                                <p className="text-sm text-gray-500">{member.role}</p>
+                                <h3 className="font-semibold text-foreground">{member.name}</h3>
+                                <p className="text-sm text-muted-foreground">{member.role}</p>
                             </div>
                         ))}
                     </div>

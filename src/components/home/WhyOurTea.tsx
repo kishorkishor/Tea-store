@@ -60,9 +60,9 @@ export default function WhyOurTea() {
                         <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary-600/30 rounded-full blur-2xl"></div>
 
                         {/* Floating Card */}
-                        <div className="absolute -bottom-8 -right-4 md:right-8 bg-white text-gray-900 rounded-xl p-5 shadow-2xl max-w-[200px]">
-                            <div className="text-3xl font-display font-bold text-primary-700">15+</div>
-                            <div className="text-sm text-gray-600">Years of Excellence</div>
+                        <div className="absolute -bottom-8 -right-4 md:right-8 bg-card dark:bg-card text-foreground rounded-xl p-5 shadow-2xl max-w-[200px] border border-border">
+                            <div className="text-3xl font-display font-bold text-primary-700 dark:text-primary">15+</div>
+                            <div className="text-sm text-muted-foreground">Years of Excellence</div>
                         </div>
                     </div>
 

@@ -235,20 +235,26 @@ export default function ProductPage() {
                                     </svg>
                                 </summary>
                                 <div className="pb-4 grid grid-cols-3 gap-4 text-center">
-                                    <div className="p-4 bg-cream-100 rounded-xl">
-                                        <div className="text-2xl mb-1">🌡️</div>
-                                        <div className="text-xs text-gray-500 mb-1">Temperature</div>
-                                        <div className="font-semibold text-sm">{product.brewingInstructions.temperature}</div>
+                                    <div className="p-4 bg-cream-100 dark:bg-muted rounded-xl">
+                                        <div className="w-8 h-8 mx-auto mb-2 text-primary-600">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /><circle cx="9" cy="12" r="3" /></svg>
+                                        </div>
+                                        <div className="text-xs text-muted-foreground mb-1">Temperature</div>
+                                        <div className="font-semibold text-sm text-foreground">{product.brewingInstructions.temperature}</div>
                                     </div>
-                                    <div className="p-4 bg-cream-100 rounded-xl">
-                                        <div className="text-2xl mb-1">⏱️</div>
-                                        <div className="text-xs text-gray-500 mb-1">Steep Time</div>
-                                        <div className="font-semibold text-sm">{product.brewingInstructions.steepTime}</div>
+                                    <div className="p-4 bg-cream-100 dark:bg-muted rounded-xl">
+                                        <div className="w-8 h-8 mx-auto mb-2 text-primary-600">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full"><circle cx="12" cy="12" r="10" strokeWidth={1.5} /><path strokeLinecap="round" strokeWidth={1.5} d="M12 6v6l4 2" /></svg>
+                                        </div>
+                                        <div className="text-xs text-muted-foreground mb-1">Steep Time</div>
+                                        <div className="font-semibold text-sm text-foreground">{product.brewingInstructions.steepTime}</div>
                                     </div>
-                                    <div className="p-4 bg-cream-100 rounded-xl">
-                                        <div className="text-2xl mb-1">🥄</div>
-                                        <div className="text-xs text-gray-500 mb-1">Amount</div>
-                                        <div className="font-semibold text-sm">{product.brewingInstructions.amount}</div>
+                                    <div className="p-4 bg-cream-100 dark:bg-muted rounded-xl">
+                                        <div className="w-8 h-8 mx-auto mb-2 text-primary-600">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
+                                        </div>
+                                        <div className="text-xs text-muted-foreground mb-1">Amount</div>
+                                        <div className="font-semibold text-sm text-foreground">{product.brewingInstructions.amount}</div>
                                     </div>
                                 </div>
                             </details>

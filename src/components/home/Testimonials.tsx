@@ -11,14 +11,14 @@ export default function Testimonials() {
     const visibleTestimonials = testimonials.slice(0, 6);
 
     return (
-        <section className="py-16 md:py-24 bg-cream-100">
+        <section className="py-16 md:py-24 bg-cream-100 dark:bg-muted/30">
             <div className="container-custom">
                 {/* Section Header */}
                 <div className="text-center mb-12">
-                    <span className="text-secondary-600 font-medium text-sm uppercase tracking-wider">
+                    <span className="text-secondary-600 dark:text-secondary font-medium text-sm uppercase tracking-wider">
                         What Our Customers Say
                     </span>
-                    <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mt-2">
+                    <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
                         Tea Lovers Speak
                     </h2>
                 </div>
@@ -29,8 +29,8 @@ export default function Testimonials() {
                         <div
                             key={testimonial.id}
                             className={cn(
-                                'bg-white rounded-2xl p-6 shadow-sm card-hover',
-                                'border border-gray-100'
+                                'bg-card rounded-2xl p-6 shadow-sm card-hover',
+                                'border border-border'
                             )}
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
@@ -41,7 +41,7 @@ export default function Testimonials() {
                                         key={i}
                                         className={cn(
                                             'w-5 h-5',
-                                            i < testimonial.rating ? 'text-secondary-500' : 'text-gray-300'
+                                            i < testimonial.rating ? 'text-secondary-500 dark:text-secondary' : 'text-gray-300 dark:text-muted-foreground/40'
                                         )}
                                         fill="currentColor"
                                         viewBox="0 0 20 20"
@@ -52,28 +52,28 @@ export default function Testimonials() {
                             </div>
 
                             {/* Quote */}
-                            <p className="text-gray-700 mb-6 leading-relaxed">
+                            <p className="text-foreground/80 mb-6 leading-relaxed">
                                 &ldquo;{testimonial.text}&rdquo;
                             </p>
 
                             {/* Author */}
                             <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
-                                    <span className="text-primary-700 font-semibold text-lg">
+                                <div className="w-12 h-12 bg-primary-100 dark:bg-primary/20 rounded-full flex items-center justify-center">
+                                    <span className="text-primary-700 dark:text-primary font-semibold text-lg">
                                         {testimonial.name.charAt(0)}
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                                    <p className="text-sm text-gray-500">{testimonial.location}</p>
+                                    <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
+                                    <p className="text-sm text-muted-foreground">{testimonial.location}</p>
                                 </div>
                             </div>
 
                             {/* Product Tag */}
                             {testimonial.productName && (
-                                <div className="mt-4 pt-4 border-t border-gray-100">
-                                    <span className="text-xs text-gray-500">Purchased: </span>
-                                    <span className="text-xs text-primary-700 font-medium">
+                                <div className="mt-4 pt-4 border-t border-border">
+                                    <span className="text-xs text-muted-foreground">Purchased: </span>
+                                    <span className="text-xs text-primary-700 dark:text-primary font-medium">
                                         {testimonial.productName}
                                     </span>
                                 </div>
@@ -90,7 +90,7 @@ export default function Testimonials() {
                             onClick={() => setActiveIndex(index)}
                             className={cn(
                                 'w-2.5 h-2.5 rounded-full transition-all',
-                                activeIndex === index ? 'bg-primary-600 w-6' : 'bg-gray-300'
+                                activeIndex === index ? 'bg-primary-600 dark:bg-primary w-6' : 'bg-gray-300 dark:bg-muted-foreground/40'
                             )}
                             aria-label={`Go to testimonial ${index + 1}`}
                         />

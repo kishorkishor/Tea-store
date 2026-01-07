@@ -95,11 +95,11 @@ export default function CollectionPage() {
             <div className="py-12 md:py-16">
                 <div className="container-custom">
                     <div className="animate-pulse space-y-8">
-                        <div className="h-8 bg-gray-200 rounded w-1/3"></div>
-                        <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                        <div className="h-8 bg-gray-200 dark:bg-muted rounded w-1/3"></div>
+                        <div className="h-4 bg-gray-200 dark:bg-muted rounded w-2/3"></div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {[1, 2, 3, 4].map(i => (
-                                <div key={i} className="aspect-square bg-gray-200 rounded-2xl"></div>
+                                <div key={i} className="aspect-square bg-gray-200 dark:bg-muted rounded-2xl"></div>
                             ))}
                         </div>
                     </div>
@@ -112,13 +112,13 @@ export default function CollectionPage() {
         return (
             <div className="py-12 md:py-16">
                 <div className="container-custom text-center">
-                    <h1 className="font-display text-3xl font-bold text-gray-900 mb-4">
+                    <h1 className="font-display text-3xl font-bold text-foreground mb-4">
                         Collection Not Found
                     </h1>
-                    <p className="text-gray-600 mb-8">
+                    <p className="text-muted-foreground mb-8">
                         The collection you&apos;re looking for doesn&apos;t exist.
                     </p>
-                    <Link href="/collections" className="text-primary-700 font-medium hover:underline">
+                    <Link href="/collections" className="text-primary-700 dark:text-primary font-medium hover:underline">
                         ← Back to Collections
                     </Link>
                 </div>
@@ -132,40 +132,40 @@ export default function CollectionPage() {
                 {/* Breadcrumb */}
                 <nav className="mb-6 text-sm" aria-label="Breadcrumb">
                     <ol className="flex items-center gap-2">
-                        <li><Link href="/" className="text-gray-500 hover:text-primary-700">Home</Link></li>
-                        <li className="text-gray-400">/</li>
-                        <li><Link href="/collections" className="text-gray-500 hover:text-primary-700">Collections</Link></li>
-                        <li className="text-gray-400">/</li>
-                        <li className="text-gray-900">{collection.name}</li>
+                        <li><Link href="/" className="text-muted-foreground hover:text-primary-700 dark:hover:text-primary">Home</Link></li>
+                        <li className="text-muted-foreground">/</li>
+                        <li><Link href="/collections" className="text-muted-foreground hover:text-primary-700 dark:hover:text-primary">Collections</Link></li>
+                        <li className="text-muted-foreground">/</li>
+                        <li className="text-foreground">{collection.name}</li>
                     </ol>
                 </nav>
 
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+                    <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-3">
                         {collection.name}
                     </h1>
-                    <p className="text-gray-600 max-w-2xl">{collection.description}</p>
+                    <p className="text-muted-foreground max-w-2xl">{collection.description}</p>
                 </div>
 
                 {/* Filters & Sort Bar */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-gray-200">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-border">
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => setShowFilters(!showFilters)}
-                            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors text-foreground"
                         >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                             </svg>
                             Filters
                             {caffeineFilter.length > 0 && (
-                                <span className="ml-1 px-2 py-0.5 bg-primary-100 text-primary-700 text-xs rounded-full">
+                                <span className="ml-1 px-2 py-0.5 bg-primary-100 dark:bg-primary/20 text-primary-700 dark:text-primary text-xs rounded-full">
                                     {caffeineFilter.length}
                                 </span>
                             )}
                         </button>
-                        <span className="text-gray-500">
+                        <span className="text-muted-foreground">
                             {filteredProducts.length} products
                         </span>
                     </div>
@@ -182,16 +182,16 @@ export default function CollectionPage() {
 
                 {/* Expandable Filters */}
                 {showFilters && (
-                    <div className="mb-8 p-6 bg-gray-50 rounded-xl animate-slide-down">
-                        <h3 className="font-semibold mb-4">Caffeine Level</h3>
+                    <div className="mb-8 p-6 bg-gray-50 dark:bg-muted rounded-xl animate-slide-down">
+                        <h3 className="font-semibold mb-4 text-foreground">Caffeine Level</h3>
                         <div className="flex flex-wrap gap-2">
                             {caffeineOptions.map((option) => (
                                 <button
                                     key={option.value}
                                     onClick={() => toggleCaffeineFilter(option.value)}
                                     className={`px-4 py-2 rounded-full border transition-colors ${caffeineFilter.includes(option.value)
-                                            ? 'bg-primary-700 text-white border-primary-700'
-                                            : 'bg-white border-gray-300 hover:border-primary-400'
+                                            ? 'bg-primary-700 dark:bg-primary text-white dark:text-primary-foreground border-primary-700 dark:border-primary'
+                                            : 'bg-card dark:bg-card border-border hover:border-primary-400 dark:hover:border-primary text-foreground'
                                         }`}
                                 >
                                     {option.label}
@@ -201,7 +201,7 @@ export default function CollectionPage() {
                         {caffeineFilter.length > 0 && (
                             <button
                                 onClick={() => setCaffeineFilter([])}
-                                className="mt-4 text-sm text-primary-700 hover:underline"
+                                className="mt-4 text-sm text-primary-700 dark:text-primary hover:underline"
                             >
                                 Clear all filters
                             </button>
@@ -218,13 +218,13 @@ export default function CollectionPage() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-20 h-20 bg-gray-100 dark:bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg className="w-10 h-10 text-gray-400 dark:text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No products found</h3>
-                        <p className="text-gray-600 mb-4">Try adjusting your filters to see more results.</p>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">No products found</h3>
+                        <p className="text-muted-foreground mb-4">Try adjusting your filters to see more results.</p>
                         <button
                             onClick={() => setCaffeineFilter([])}
                             className="text-primary-700 font-medium hover:underline"

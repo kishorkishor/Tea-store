@@ -31,7 +31,7 @@ export default function ReturnsPage() {
                         </p>
 
                         <div className="bg-primary-50 p-6 rounded-xl mb-8">
-                            <p className="text-primary-800 font-medium mb-2">✨ Our Promise</p>
+                            <p className="text-primary-800 font-medium mb-2">Our Promise</p>
                             <p className="text-gray-700">
                                 We offer a 7-day satisfaction guarantee on all sealed products.
                                 If you&apos;re not satisfied, we&apos;ll make it right.

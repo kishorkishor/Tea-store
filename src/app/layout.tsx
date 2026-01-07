@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/layout/CartDrawer";
+import SupabaseCheck from "@/components/debug/SupabaseCheck";
 
 const playfair = Playfair_Display({
   variable: "--font-display",
@@ -73,14 +76,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="antialiased">
-        <CartProvider>
-          <Navbar />
-          <main className="min-h-screen pt-16 md:pt-20">{children}</main>
-          <Footer />
-          <CartDrawer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Navbar />
+              <main className="min-h-screen pt-16 md:pt-20 bg-background text-foreground transition-colors duration-300">
+                {children}
+              </main>
+              <Footer />
+              <CartDrawer />
+              {process.env.NODE_ENV === 'development' && <SupabaseCheck />}
+            </ThemeProvider>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -57,8 +57,8 @@ export default function Newsletter() {
                             placeholder="Enter your email address"
                             required
                             disabled={status === 'loading'}
-                            className="flex-1 px-5 py-3 rounded-lg bg-white text-gray-900 placeholder:text-gray-400
-                       focus:outline-none focus:ring-2 focus:ring-white/50
+                            className="flex-1 px-5 py-3 rounded-lg bg-white dark:bg-card text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground
+                       focus:outline-none focus:ring-2 focus:ring-white/50 dark:focus:ring-primary/50
                        disabled:opacity-50"
                         />
                         <Button
