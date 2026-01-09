@@ -33,9 +33,9 @@ const values = [
 ];
 
 const team = [
-    { name: 'Kishor', role: 'Founder & CEO', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop' },
-    { name: 'Wise Kishor', role: 'Head of Sourcing', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop' },
-    { name: 'Not So Wise Kishor', role: 'Master Tea Blender', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop' },
+    { name: 'Kishor', role: 'Founder & CEO', image: '/evil-tom.png' },
+    { name: 'Wise Kishor', role: 'Head of Sourcing', image: '/evil-tom.png' },
+    { name: 'Not So Wise Kishor', role: 'Master Tea Blender', image: '/evil-tom.png' },
 ];
 
 export default function AboutPage() {
