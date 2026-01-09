@@ -158,8 +158,8 @@ export default function Footer() {
 
             {/* Bottom Bar */}
             <div className="border-t border-primary-800 dark:border-border relative overflow-hidden">
-                {/* Animated gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-purple-900/50 to-primary-900 dark:from-card dark:via-purple-950/30 dark:to-card opacity-50"></div>
+                {/* Animated gradient background using theme colors */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-primary-950 to-primary-900 dark:from-card dark:via-primary-950/30 dark:to-card opacity-60"></div>
 
                 <div className="container-custom py-12 md:py-16 relative z-10">
                     <div className="flex flex-col items-center gap-10">
@@ -167,25 +167,25 @@ export default function Footer() {
                         <div className="text-center space-y-4">
                             <p className="text-xl md:text-2xl font-bold group cursor-default">
                                 <span className="text-primary-200 dark:text-muted-foreground transition-all duration-500 group-hover:text-white">© 2026 </span>
-                                <span className="bg-gradient-to-r from-secondary-400 via-purple-400 to-pink-400 bg-clip-text text-transparent 
-                                    animate-pulse transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(168,85,247,0.8)]">ChaiBari</span>
+                                <span className="bg-gradient-to-r from-secondary-300 via-secondary-400 to-accent-400 bg-clip-text text-transparent 
+                                    animate-pulse transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(240,201,77,0.8)]">ChaiBari</span>
                                 <span className="text-primary-200 dark:text-muted-foreground transition-all duration-500 group-hover:text-white">. All rights reserved.</span>
                             </p>
 
-                            {/* Evil text with dramatic styling */}
+                            {/* Evil text with theme-matching dramatic styling */}
                             <div className="group cursor-default">
                                 <p className="text-lg md:text-xl font-semibold italic
-                                    bg-gradient-to-r from-red-500 via-orange-500 to-red-500 bg-clip-text text-transparent
-                                    transition-all duration-500 hover:scale-105 hover:drop-shadow-[0_0_30px_rgba(239,68,68,0.7)]
+                                    bg-gradient-to-r from-accent-500 via-secondary-500 to-accent-500 bg-clip-text text-transparent
+                                    transition-all duration-500 hover:scale-105 hover:drop-shadow-[0_0_30px_rgba(199,138,82,0.7)]
                                     animate-pulse" style={{ animationDuration: '3s' }}>
-                                    Forged in the abyss of eternal sorrow by Kishor 🔥
+                                    Forged in the abyss of eternal sorrow by Kishor 🍵
                                 </p>
                             </div>
 
-                            <p className="text-base md:text-lg text-primary-400/80 dark:text-muted-foreground/50 
-                                transition-all duration-500 hover:text-primary-200 dark:hover:text-muted-foreground
+                            <p className="text-base md:text-lg text-primary-300/80 dark:text-muted-foreground/50 
+                                transition-all duration-500 hover:text-secondary-300 dark:hover:text-secondary
                                 hover:tracking-wider cursor-default">
-                                ☠️ Hope is a lie, and the void awaits us all ☠️
+                                🌿 Hope is a lie, and the void awaits us all 🌿
                             </p>
                         </div>
 
@@ -194,25 +194,25 @@ export default function Footer() {
                             <span className="text-primary-300 dark:text-muted-foreground font-medium">We accept:</span>
                             <div className="flex items-center gap-4">
                                 <span className="px-5 py-2.5 bg-gradient-to-r from-primary-800 to-primary-700 dark:from-muted dark:to-muted/80 
-                                    rounded-lg text-sm font-bold shadow-lg
+                                    rounded-lg text-sm font-bold shadow-lg border border-primary-600/30 dark:border-border
                                     transition-all duration-300 hover:scale-110 hover:from-primary-600 hover:to-primary-500 
                                     dark:hover:from-primary/80 dark:hover:to-primary/60
-                                    hover:shadow-xl hover:shadow-green-500/30 cursor-default">bKash</span>
+                                    hover:shadow-xl hover:shadow-primary-500/40 cursor-default">bKash</span>
                                 <span className="px-5 py-2.5 bg-gradient-to-r from-primary-800 to-primary-700 dark:from-muted dark:to-muted/80 
-                                    rounded-lg text-sm font-bold shadow-lg
+                                    rounded-lg text-sm font-bold shadow-lg border border-primary-600/30 dark:border-border
                                     transition-all duration-300 hover:scale-110 hover:from-primary-600 hover:to-primary-500 
                                     dark:hover:from-primary/80 dark:hover:to-primary/60
-                                    hover:shadow-xl hover:shadow-orange-500/30 cursor-default">Nagad</span>
+                                    hover:shadow-xl hover:shadow-secondary-500/40 cursor-default">Nagad</span>
                                 <span className="px-5 py-2.5 bg-gradient-to-r from-primary-800 to-primary-700 dark:from-muted dark:to-muted/80 
-                                    rounded-lg text-sm font-bold shadow-lg
+                                    rounded-lg text-sm font-bold shadow-lg border border-primary-600/30 dark:border-border
                                     transition-all duration-300 hover:scale-110 hover:from-primary-600 hover:to-primary-500 
                                     dark:hover:from-primary/80 dark:hover:to-primary/60
-                                    hover:shadow-xl hover:shadow-blue-500/30 cursor-default">Visa</span>
+                                    hover:shadow-xl hover:shadow-accent-500/40 cursor-default">Visa</span>
                                 <span className="px-5 py-2.5 bg-gradient-to-r from-primary-800 to-primary-700 dark:from-muted dark:to-muted/80 
-                                    rounded-lg text-sm font-bold shadow-lg
+                                    rounded-lg text-sm font-bold shadow-lg border border-primary-600/30 dark:border-border
                                     transition-all duration-300 hover:scale-110 hover:from-primary-600 hover:to-primary-500 
                                     dark:hover:from-primary/80 dark:hover:to-primary/60
-                                    hover:shadow-xl hover:shadow-yellow-500/30 cursor-default">Mastercard</span>
+                                    hover:shadow-xl hover:shadow-secondary-400/40 cursor-default">Mastercard</span>
                             </div>
                         </div>
                     </div>
