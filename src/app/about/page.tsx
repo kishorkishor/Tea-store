@@ -33,9 +33,9 @@ const values = [
 ];
 
 const team = [
-    { name: 'Kishor', role: 'Founder & CEO', image: '/evil-tom.png' },
-    { name: 'Wise Kishor', role: 'Head of Sourcing', image: '/evil-tom.png' },
-    { name: 'Not So Wise Kishor', role: 'Master Tea Blender', image: '/evil-tom.png' },
+    { name: 'Kishor', role: 'Founder & CEO', image: '/team-kishor.png' },
+    { name: 'Wise Kishor', role: 'Head of Sourcing', image: '/team-wise.png' },
+    { name: 'Not So Wise Kishor', role: 'Master Tea Blender', image: '/team-not-wise.png' },
 ];
 
 export default function AboutPage() {
