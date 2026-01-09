@@ -155,7 +155,10 @@ export default function Footer() {
             <div className="border-t border-primary-800 dark:border-border">
                 <div className="container-custom py-8 md:py-10">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm md:text-base text-primary-300 dark:text-muted-foreground">
-                        <p>© 2024 ChaiBari. All rights reserved. Crafted in the shadows by Kishor 🖤</p>
+                        <div className="text-center md:text-left">
+                            <p>© 2024 ChaiBari. All rights reserved. Forged in the abyss of eternal sorrow by Kishor.</p>
+                            <p className="text-xs mt-1 text-primary-400 dark:text-muted-foreground/60">Hope is a lie, and the void awaits us all.</p>
+                        </div>
                         <div className="flex flex-col sm:flex-row items-center gap-4">
                             <span>We accept:</span>
                             <div className="flex items-center gap-3">
