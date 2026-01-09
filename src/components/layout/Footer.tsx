@@ -55,31 +55,31 @@ export default function Footer() {
     return (
         <footer className="bg-primary-900 dark:bg-card text-white dark:text-card-foreground border-t border-border">
             {/* Main Footer */}
-            <div className="container-custom pt-20 pb-16 md:pt-24 md:pb-20">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
+            <div className="container-custom pt-24 pb-20 md:pt-32 md:pb-28">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-24">
                     {/* Brand Column */}
                     <div className="lg:col-span-1">
-                        <Link href="/" className="flex items-center gap-2 mb-6">
-                            <div className="w-10 h-10 bg-white dark:bg-primary rounded-full flex items-center justify-center">
-                                <svg viewBox="0 0 24 24" className="w-6 h-6 text-primary-700 dark:text-primary-foreground" fill="currentColor">
+                        <Link href="/" className="flex items-center gap-3 mb-8">
+                            <div className="w-12 h-12 bg-white dark:bg-primary rounded-full flex items-center justify-center">
+                                <svg viewBox="0 0 24 24" className="w-7 h-7 text-primary-700 dark:text-primary-foreground" fill="currentColor">
                                     <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm2 13h-4v-1h4v1zm0-3H10v-1h4v1zm1.5-3.5c-.42.78-1.14 1.34-2 1.56V12h-3V9.06c-.86-.22-1.58-.78-2-1.56-.5-.9-.5-2 0-2.9.42-.78 1.14-1.34 2-1.56V2h3v1.04c.86.22 1.58.78 2 1.56.5.9.5 2 0 2.9z" />
                                 </svg>
                             </div>
-                            <span className="font-display text-xl font-bold">ChaiBari</span>
+                            <span className="font-display text-2xl font-bold">ChaiBari</span>
                         </Link>
-                        <p className="text-primary-200 dark:text-muted-foreground mb-8 leading-relaxed">
+                        <p className="text-primary-200 dark:text-muted-foreground mb-10 leading-relaxed text-lg">
                             Bringing the finest teas from gardens across Bangladesh and beyond to your cup.
                             Quality, tradition, and taste in every sip.
                         </p>
                         {/* Social Links */}
-                        <div className="flex gap-4">
+                        <div className="flex gap-5">
                             {socialLinks.map((social) => (
                                 <a
                                     key={social.name}
                                     href={social.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-10 h-10 bg-primary-800 rounded-full flex items-center justify-center
+                                    className="w-12 h-12 bg-primary-800 rounded-full flex items-center justify-center
                            hover:bg-primary-700 transition-colors"
                                     aria-label={social.name}
                                 >
@@ -91,13 +91,13 @@ export default function Footer() {
 
                     {/* Shop Links */}
                     <div>
-                        <h4 className="font-display font-semibold text-lg md:text-xl mb-6">Shop</h4>
-                        <ul className="space-y-4">
+                        <h4 className="font-display font-semibold text-xl md:text-2xl mb-8">Shop</h4>
+                        <ul className="space-y-5">
                             {footerLinks.shop.map((link) => (
                                 <li key={link.href}>
                                     <Link
                                         href={link.href}
-                                        className="text-primary-200 dark:text-muted-foreground hover:text-white dark:hover:text-foreground transition-colors text-base"
+                                        className="text-primary-200 dark:text-muted-foreground hover:text-white dark:hover:text-foreground transition-colors text-lg"
                                     >
                                         {link.label}
                                     </Link>
@@ -108,13 +108,13 @@ export default function Footer() {
 
                     {/* Company Links */}
                     <div>
-                        <h4 className="font-display font-semibold text-lg md:text-xl mb-6">Company</h4>
-                        <ul className="space-y-4">
+                        <h4 className="font-display font-semibold text-xl md:text-2xl mb-8">Company</h4>
+                        <ul className="space-y-5">
                             {footerLinks.company.map((link) => (
                                 <li key={link.href}>
                                     <Link
                                         href={link.href}
-                                        className="text-primary-200 dark:text-muted-foreground hover:text-white dark:hover:text-foreground transition-colors text-base"
+                                        className="text-primary-200 dark:text-muted-foreground hover:text-white dark:hover:text-foreground transition-colors text-lg"
                                     >
                                         {link.label}
                                     </Link>
@@ -125,26 +125,26 @@ export default function Footer() {
 
                     {/* Contact Info */}
                     <div>
-                        <h4 className="font-display font-semibold text-lg md:text-xl mb-6">Contact Us</h4>
-                        <ul className="space-y-4 text-primary-200 dark:text-muted-foreground">
-                            <li className="flex items-start gap-4">
-                                <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h4 className="font-display font-semibold text-xl md:text-2xl mb-8">Contact Us</h4>
+                        <ul className="space-y-6 text-primary-200 dark:text-muted-foreground">
+                            <li className="flex items-start gap-5">
+                                <svg className="w-6 h-6 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
-                                <span className="text-base leading-relaxed">House 42, Road 11<br />Banani, Dhaka 1213</span>
+                                <span className="text-lg leading-relaxed">House 42, Road 11<br />Banani, Dhaka 1213</span>
                             </li>
-                            <li className="flex items-center gap-4">
-                                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <li className="flex items-center gap-5">
+                                <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
-                                <span className="text-base">+880 1234-567890</span>
+                                <span className="text-lg">+880 1234-567890</span>
                             </li>
-                            <li className="flex items-center gap-4">
-                                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <li className="flex items-center gap-5">
+                                <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
-                                <span className="text-base">hello@chaibari.com</span>
+                                <span className="text-lg">hello@chaibari.com</span>
                             </li>
                         </ul>
                     </div>
@@ -153,19 +153,19 @@ export default function Footer() {
 
             {/* Bottom Bar */}
             <div className="border-t border-primary-800 dark:border-border">
-                <div className="container-custom py-8 md:py-10">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm md:text-base text-primary-300 dark:text-muted-foreground">
+                <div className="container-custom py-10 md:py-12">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-base md:text-lg text-primary-300 dark:text-muted-foreground">
                         <div className="text-center md:text-left">
-                            <p>© 2024 ChaiBari. All rights reserved. Forged in the abyss of eternal sorrow by Kishor.</p>
-                            <p className="text-xs mt-1 text-primary-400 dark:text-muted-foreground/60">Hope is a lie, and the void awaits us all.</p>
+                            <p className="mb-2">© 2024 ChaiBari. All rights reserved. Forged in the abyss of eternal sorrow by Kishor.</p>
+                            <p className="text-sm text-primary-400 dark:text-muted-foreground/60">Hope is a lie, and the void awaits us all.</p>
                         </div>
-                        <div className="flex flex-col sm:flex-row items-center gap-4">
+                        <div className="flex flex-col sm:flex-row items-center gap-6">
                             <span>We accept:</span>
-                            <div className="flex items-center gap-3">
-                                <span className="px-3 py-1.5 bg-primary-800 dark:bg-muted rounded text-xs font-medium">bKash</span>
-                                <span className="px-3 py-1.5 bg-primary-800 dark:bg-muted rounded text-xs font-medium">Nagad</span>
-                                <span className="px-3 py-1.5 bg-primary-800 dark:bg-muted rounded text-xs font-medium">Visa</span>
-                                <span className="px-3 py-1.5 bg-primary-800 dark:bg-muted rounded text-xs font-medium">Mastercard</span>
+                            <div className="flex items-center gap-4">
+                                <span className="px-4 py-2 bg-primary-800 dark:bg-muted rounded text-sm font-medium">bKash</span>
+                                <span className="px-4 py-2 bg-primary-800 dark:bg-muted rounded text-sm font-medium">Nagad</span>
+                                <span className="px-4 py-2 bg-primary-800 dark:bg-muted rounded text-sm font-medium">Visa</span>
+                                <span className="px-4 py-2 bg-primary-800 dark:bg-muted rounded text-sm font-medium">Mastercard</span>
                             </div>
                         </div>
                     </div>
