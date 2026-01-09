@@ -19,7 +19,7 @@ export default function ProductEditPage() {
     const [saving, setSaving] = useState(false);
     const [showPreview, setShowPreview] = useState(false);
     const [collections, setCollections] = useState<Array<{ id: string; name: string; slug: string }>>([]);
-    
+
     const [formData, setFormData] = useState({
         name: '',
         slug: '',
@@ -105,7 +105,7 @@ export default function ProductEditPage() {
                 .eq('product_id', productId);
 
             setVariants(
-                (productVariants || []).map((v) => ({
+                (productVariants || []).map((v: { id: string; name: string; weight: string; price: number | null; compare_at_price: number | null; stock_quantity: number }) => ({
                     id: v.id,
                     name: v.name,
                     weight: v.weight,
@@ -174,16 +174,16 @@ export default function ProductEditPage() {
                 .select('id')
                 .eq('product_id', savedProductId);
 
-            const existingVariantIds = new Set((existingVariants || []).map(v => v.id));
-            const currentVariantIds = new Set(variants.filter(v => v.id).map(v => v.id));
+            const existingVariantIds = new Set((existingVariants || []).map((v: { id: string }) => v.id));
+            const currentVariantIds = new Set(variants.filter((v) => v.id).map((v) => v.id));
 
             // Delete variants that were removed
             for (const existingId of existingVariantIds) {
-                if (!currentVariantIds.has(existingId)) {
+                if (!currentVariantIds.has(existingId as string)) {
                     await supabase
                         .from('product_variants')
                         .delete()
-                        .eq('id', existingId);
+                        .eq('id', existingId as string);
                 }
             }
 
@@ -259,282 +259,282 @@ export default function ProductEditPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className={showPreview ? 'lg:col-span-2' : 'lg:col-span-3'}>
                     <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Input
-                        label="Product Name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        required
-                    />
-                    <Input
-                        label="Slug"
-                        value={formData.slug}
-                        onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                        required
-                    />
-                </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <Input
+                                label="Product Name"
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                required
+                            />
+                            <Input
+                                label="Slug"
+                                value={formData.slug}
+                                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                                required
+                            />
+                        </div>
 
-                <Input
-                    label="Short Description"
-                    value={formData.short_description}
-                    onChange={(e) => setFormData({ ...formData, short_description: e.target.value })}
-                    required
-                />
-
-                <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                        Description
-                    </label>
-                    <textarea
-                        value={formData.description}
-                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground"
-                        rows={4}
-                        required
-                    />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Input
-                        label="Price (৳)"
-                        type="number"
-                        step="0.01"
-                        value={formData.price}
-                        onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                        required
-                    />
-                    <Input
-                        label="Compare at Price (৳)"
-                        type="number"
-                        step="0.01"
-                        value={formData.compare_at_price}
-                        onChange={(e) => setFormData({ ...formData, compare_at_price: e.target.value })}
-                    />
-                    <Input
-                        label="Category"
-                        value={formData.category}
-                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        required
-                    />
-                </div>
-
-                <Select
-                    label="Collection"
-                    value={formData.collection_id}
-                    onChange={(e) => setFormData({ ...formData, collection_id: e.target.value })}
-                    options={[
-                        { value: '', label: 'None' },
-                        ...collections.map(c => ({ value: c.id, label: c.name })),
-                    ]}
-                />
-
-                <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                        Product Images
-                    </label>
-                    <ImageUpload
-                        existingImages={formData.images}
-                        onUploadComplete={(urls) => setFormData({ ...formData, images: urls })}
-                    />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                            Tags (comma-separated)
-                        </label>
                         <Input
-                            value={formData.tags}
-                            onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                            placeholder="organic, premium, antioxidant"
+                            label="Short Description"
+                            value={formData.short_description}
+                            onChange={(e) => setFormData({ ...formData, short_description: e.target.value })}
+                            required
                         />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                            Origin
-                        </label>
-                        <Input
-                            value={formData.origin}
-                            onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
-                            placeholder="Sylhet, Bangladesh"
-                        />
-                    </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                            Brewing Temperature
-                        </label>
-                        <Input
-                            value={formData.brewing_temperature}
-                            onChange={(e) => setFormData({ ...formData, brewing_temperature: e.target.value })}
-                            placeholder="75-80°C"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                            Steep Time
-                        </label>
-                        <Input
-                            value={formData.brewing_steep_time}
-                            onChange={(e) => setFormData({ ...formData, brewing_steep_time: e.target.value })}
-                            placeholder="2-3 minutes"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                            Amount
-                        </label>
-                        <Input
-                            value={formData.brewing_amount}
-                            onChange={(e) => setFormData({ ...formData, brewing_amount: e.target.value })}
-                            placeholder="1 teaspoon per cup"
-                        />
-                    </div>
-                </div>
+                        <div>
+                            <label className="block text-sm font-medium text-foreground mb-2">
+                                Description
+                            </label>
+                            <textarea
+                                value={formData.description}
+                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground"
+                                rows={4}
+                                required
+                            />
+                        </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                        Ingredients (comma-separated)
-                    </label>
-                    <Input
-                        value={formData.ingredients}
-                        onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })}
-                        placeholder="100% Pure Green Tea Leaves"
-                    />
-                </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <Input
+                                label="Price (৳)"
+                                type="number"
+                                step="0.01"
+                                value={formData.price}
+                                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                                required
+                            />
+                            <Input
+                                label="Compare at Price (৳)"
+                                type="number"
+                                step="0.01"
+                                value={formData.compare_at_price}
+                                onChange={(e) => setFormData({ ...formData, compare_at_price: e.target.value })}
+                            />
+                            <Input
+                                label="Category"
+                                value={formData.category}
+                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                required
+                            />
+                        </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                            Caffeine Level
-                        </label>
                         <Select
-                            value={formData.caffeine_level}
-                            onChange={(e) => setFormData({ ...formData, caffeine_level: e.target.value as any })}
+                            label="Collection"
+                            value={formData.collection_id}
+                            onChange={(e) => setFormData({ ...formData, collection_id: e.target.value })}
                             options={[
-                                { value: 'none', label: 'None' },
-                                { value: 'low', label: 'Low' },
-                                { value: 'medium', label: 'Medium' },
-                                { value: 'high', label: 'High' },
+                                { value: '', label: 'None' },
+                                ...collections.map(c => ({ value: c.id, label: c.name })),
                             ]}
                         />
-                    </div>
-                </div>
 
-                <div className="flex flex-wrap gap-4">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                            type="checkbox"
-                            checked={formData.in_stock}
-                            onChange={(e) => setFormData({ ...formData, in_stock: e.target.checked })}
-                            className="w-4 h-4 rounded border-border"
-                        />
-                        <span className="text-sm text-foreground">In Stock</span>
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                            type="checkbox"
-                            checked={formData.is_featured}
-                            onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })}
-                            className="w-4 h-4 rounded border-border"
-                        />
-                        <span className="text-sm text-foreground">Featured</span>
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                            type="checkbox"
-                            checked={formData.is_best_seller}
-                            onChange={(e) => setFormData({ ...formData, is_best_seller: e.target.checked })}
-                            className="w-4 h-4 rounded border-border"
-                        />
-                        <span className="text-sm text-foreground">Best Seller</span>
-                    </label>
-                </div>
+                        <div>
+                            <label className="block text-sm font-medium text-foreground mb-2">
+                                Product Images
+                            </label>
+                            <ImageUpload
+                                existingImages={formData.images}
+                                onUploadComplete={(urls) => setFormData({ ...formData, images: urls })}
+                            />
+                        </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                        Product Variants
-                    </label>
-                    <div className="space-y-4">
-                        {variants.map((variant, index) => (
-                            <div key={index} className="grid grid-cols-1 md:grid-cols-7 gap-4 p-4 border border-border rounded-lg bg-muted/30">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-foreground mb-2">
+                                    Tags (comma-separated)
+                                </label>
                                 <Input
-                                    placeholder="Variant Name"
-                                    value={variant.name}
-                                    onChange={(e) => {
-                                        const updated = [...variants];
-                                        updated[index].name = e.target.value;
-                                        setVariants(updated);
-                                    }}
-                                    required
+                                    value={formData.tags}
+                                    onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                                    placeholder="organic, premium, antioxidant"
                                 />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-foreground mb-2">
+                                    Origin
+                                </label>
                                 <Input
-                                    placeholder="Weight (e.g., 50g)"
-                                    value={variant.weight}
-                                    onChange={(e) => {
-                                        const updated = [...variants];
-                                        updated[index].weight = e.target.value;
-                                        setVariants(updated);
-                                    }}
-                                    required
+                                    value={formData.origin}
+                                    onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
+                                    placeholder="Sylhet, Bangladesh"
                                 />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-foreground mb-2">
+                                    Brewing Temperature
+                                </label>
                                 <Input
-                                    placeholder="Price (৳)"
-                                    type="number"
-                                    step="0.01"
-                                    value={variant.price}
-                                    onChange={(e) => {
-                                        const updated = [...variants];
-                                        updated[index].price = e.target.value;
-                                        setVariants(updated);
-                                    }}
-                                    required
+                                    value={formData.brewing_temperature}
+                                    onChange={(e) => setFormData({ ...formData, brewing_temperature: e.target.value })}
+                                    placeholder="75-80°C"
                                 />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-foreground mb-2">
+                                    Steep Time
+                                </label>
                                 <Input
-                                    placeholder="Compare Price (৳)"
-                                    type="number"
-                                    step="0.01"
-                                    value={variant.compare_at_price}
-                                    onChange={(e) => {
-                                        const updated = [...variants];
-                                        updated[index].compare_at_price = e.target.value;
-                                        setVariants(updated);
-                                    }}
+                                    value={formData.brewing_steep_time}
+                                    onChange={(e) => setFormData({ ...formData, brewing_steep_time: e.target.value })}
+                                    placeholder="2-3 minutes"
                                 />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-foreground mb-2">
+                                    Amount
+                                </label>
                                 <Input
-                                    placeholder="Stock Qty"
-                                    type="number"
-                                    min="0"
-                                    value={variant.stock_quantity}
-                                    onChange={(e) => {
-                                        const updated = [...variants];
-                                        updated[index].stock_quantity = e.target.value;
-                                        setVariants(updated);
-                                    }}
-                                    required
+                                    value={formData.brewing_amount}
+                                    onChange={(e) => setFormData({ ...formData, brewing_amount: e.target.value })}
+                                    placeholder="1 teaspoon per cup"
                                 />
-                                <div className="flex items-center">
-                                    <span className="text-xs text-muted-foreground">
-                                        Stock: {variant.stock_quantity || 0}
-                                    </span>
-                                </div>
-                                <Button
-                                    type="button"
-                                    variant="danger"
-                                    size="sm"
-                                    onClick={() => removeVariant(index)}
-                                >
-                                    Remove
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-foreground mb-2">
+                                Ingredients (comma-separated)
+                            </label>
+                            <Input
+                                value={formData.ingredients}
+                                onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })}
+                                placeholder="100% Pure Green Tea Leaves"
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-foreground mb-2">
+                                    Caffeine Level
+                                </label>
+                                <Select
+                                    value={formData.caffeine_level}
+                                    onChange={(e) => setFormData({ ...formData, caffeine_level: e.target.value as any })}
+                                    options={[
+                                        { value: 'none', label: 'None' },
+                                        { value: 'low', label: 'Low' },
+                                        { value: 'medium', label: 'Medium' },
+                                        { value: 'high', label: 'High' },
+                                    ]}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex flex-wrap gap-4">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.in_stock}
+                                    onChange={(e) => setFormData({ ...formData, in_stock: e.target.checked })}
+                                    className="w-4 h-4 rounded border-border"
+                                />
+                                <span className="text-sm text-foreground">In Stock</span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.is_featured}
+                                    onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })}
+                                    className="w-4 h-4 rounded border-border"
+                                />
+                                <span className="text-sm text-foreground">Featured</span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.is_best_seller}
+                                    onChange={(e) => setFormData({ ...formData, is_best_seller: e.target.checked })}
+                                    className="w-4 h-4 rounded border-border"
+                                />
+                                <span className="text-sm text-foreground">Best Seller</span>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-foreground mb-2">
+                                Product Variants
+                            </label>
+                            <div className="space-y-4">
+                                {variants.map((variant, index) => (
+                                    <div key={index} className="grid grid-cols-1 md:grid-cols-7 gap-4 p-4 border border-border rounded-lg bg-muted/30">
+                                        <Input
+                                            placeholder="Variant Name"
+                                            value={variant.name}
+                                            onChange={(e) => {
+                                                const updated = [...variants];
+                                                updated[index].name = e.target.value;
+                                                setVariants(updated);
+                                            }}
+                                            required
+                                        />
+                                        <Input
+                                            placeholder="Weight (e.g., 50g)"
+                                            value={variant.weight}
+                                            onChange={(e) => {
+                                                const updated = [...variants];
+                                                updated[index].weight = e.target.value;
+                                                setVariants(updated);
+                                            }}
+                                            required
+                                        />
+                                        <Input
+                                            placeholder="Price (৳)"
+                                            type="number"
+                                            step="0.01"
+                                            value={variant.price}
+                                            onChange={(e) => {
+                                                const updated = [...variants];
+                                                updated[index].price = e.target.value;
+                                                setVariants(updated);
+                                            }}
+                                            required
+                                        />
+                                        <Input
+                                            placeholder="Compare Price (৳)"
+                                            type="number"
+                                            step="0.01"
+                                            value={variant.compare_at_price}
+                                            onChange={(e) => {
+                                                const updated = [...variants];
+                                                updated[index].compare_at_price = e.target.value;
+                                                setVariants(updated);
+                                            }}
+                                        />
+                                        <Input
+                                            placeholder="Stock Qty"
+                                            type="number"
+                                            min="0"
+                                            value={variant.stock_quantity}
+                                            onChange={(e) => {
+                                                const updated = [...variants];
+                                                updated[index].stock_quantity = e.target.value;
+                                                setVariants(updated);
+                                            }}
+                                            required
+                                        />
+                                        <div className="flex items-center">
+                                            <span className="text-xs text-muted-foreground">
+                                                Stock: {variant.stock_quantity || 0}
+                                            </span>
+                                        </div>
+                                        <Button
+                                            type="button"
+                                            variant="danger"
+                                            size="sm"
+                                            onClick={() => removeVariant(index)}
+                                        >
+                                            Remove
+                                        </Button>
+                                    </div>
+                                ))}
+                                <Button type="button" variant="outline" onClick={addVariant}>
+                                    + Add Variant
                                 </Button>
                             </div>
-                        ))}
-                        <Button type="button" variant="outline" onClick={addVariant}>
-                            + Add Variant
-                        </Button>
-                    </div>
-                </div>
+                        </div>
 
                         <div className="flex gap-4">
                             <Button type="submit" isLoading={saving}>

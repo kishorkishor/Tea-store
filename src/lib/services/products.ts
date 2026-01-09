@@ -50,7 +50,7 @@ export async function getProducts(filters?: ProductFilters): Promise<Product[]> 
                 .select('id')
                 .eq('slug', filters.collection)
                 .single();
-            
+
             if (collection) {
                 query = query.eq('collection_id', collection.id);
             }
@@ -81,7 +81,7 @@ export async function getProducts(filters?: ProductFilters): Promise<Product[]> 
     }
 
     // Get variants for all products
-    const productIds = products.map(p => p.id);
+    const productIds = products.map((p: { id: string }) => p.id);
     const { data: variants } = await supabase
         .from('product_variants')
         .select('*')
@@ -196,7 +196,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
     }
 
     // Get variants
-    const productIds = products.map(p => p.id);
+    const productIds = products.map((p: { id: string }) => p.id);
     const { data: variants } = await supabase
         .from('product_variants')
         .select('*')
@@ -238,7 +238,7 @@ export async function getBestSellers(): Promise<Product[]> {
     }
 
     // Get variants
-    const productIds = products.map(p => p.id);
+    const productIds = products.map((p: { id: string }) => p.id);
     const { data: variants } = await supabase
         .from('product_variants')
         .select('*')
@@ -279,7 +279,7 @@ export async function searchProducts(query: string): Promise<Product[]> {
     }
 
     // Get variants
-    const productIds = products.map(p => p.id);
+    const productIds = products.map((p: { id: string }) => p.id);
     const { data: variants } = await supabase
         .from('product_variants')
         .select('*')

@@ -27,7 +27,7 @@ export default function SuperAdminDashboard() {
                 .from('sales_tracking')
                 .select('revenue');
 
-            const totalRevenue = salesData?.reduce((sum, s) => sum + parseFloat(s.revenue || '0'), 0) || 0;
+            const totalRevenue = salesData?.reduce((sum: number, s: { revenue: string | null }) => sum + parseFloat(s.revenue || '0'), 0) || 0;
 
             // Today's revenue
             const today = new Date().toISOString().split('T')[0];
@@ -36,7 +36,7 @@ export default function SuperAdminDashboard() {
                 .select('revenue')
                 .eq('sale_date', today);
 
-            const todayRevenue = todaySales?.reduce((sum, s) => sum + parseFloat(s.revenue || '0'), 0) || 0;
+            const todayRevenue = todaySales?.reduce((sum: number, s: { revenue: string | null }) => sum + parseFloat(s.revenue || '0'), 0) || 0;
 
             // Total orders
             const { count: totalOrders } = await supabase

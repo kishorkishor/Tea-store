@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { signIn, signUp } from '@/lib/auth';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 
-export default function LoginPage() {
+function LoginForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const redirect = searchParams.get('redirect') || '/';
@@ -34,7 +34,6 @@ export default function LoginPage() {
                 const result = await signUp(email, password, firstName, lastName);
                 if (result.user) {
                     setError('Account created! Please check your email to verify your account.');
-                    // Optionally redirect after a delay
                     setTimeout(() => {
                         setIsLogin(true);
                         setError('');
@@ -131,3 +130,16 @@ export default function LoginPage() {
     );
 }
 
+export default function LoginPage() {
+    return (
+        <Suspense fallback={
+            <div className="py-12 md:py-16">
+                <div className="container-custom max-w-md text-center">
+                    <div className="animate-pulse">Loading...</div>
+                </div>
+            </div>
+        }>
+            <LoginForm />
+        </Suspense>
+    );
+}

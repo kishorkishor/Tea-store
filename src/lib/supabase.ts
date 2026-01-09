@@ -1,23 +1,59 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error(
-    'Missing Supabase environment variables!\n\n' +
-    'Please create a .env.local file in the tea-store folder with:\n' +
-    'NEXT_PUBLIC_SUPABASE_URL=your_supabase_url\n' +
-    'NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key\n\n' +
-    'Then restart your dev server with: npm run dev'
-  );
-}
+// Check if Supabase is properly configured
+export const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
-  },
-});
+// Create a mock response for when Supabase is not configured
+const mockResponse = {
+  data: null,
+  error: { message: 'Supabase is not configured. Please set environment variables.' },
+};
+
+// Create a mock Supabase client for build time / when env vars are missing
+const createMockClient = (): any => {
+  const mockQueryBuilder = () => ({
+    select: () => mockQueryBuilder(),
+    insert: () => mockQueryBuilder(),
+    update: () => mockQueryBuilder(),
+    delete: () => mockQueryBuilder(),
+    eq: () => mockQueryBuilder(),
+    neq: () => mockQueryBuilder(),
+    order: () => mockQueryBuilder(),
+    limit: () => mockQueryBuilder(),
+    single: () => Promise.resolve(mockResponse),
+    then: (resolve: Function) => resolve(mockResponse),
+  });
+
+  return {
+    from: () => mockQueryBuilder(),
+    auth: {
+      getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+      getUser: () => Promise.resolve({ data: { user: null }, error: null }),
+      signInWithPassword: () => Promise.resolve({ data: { user: null, session: null }, error: { message: 'Supabase not configured' } }),
+      signUp: () => Promise.resolve({ data: { user: null, session: null }, error: { message: 'Supabase not configured' } }),
+      signOut: () => Promise.resolve({ error: null }),
+      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => { } } } }),
+    },
+    storage: {
+      from: () => ({
+        upload: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
+        getPublicUrl: () => ({ data: { publicUrl: '' } }),
+      }),
+    },
+  };
+};
+
+// Export the real client if configured, otherwise export mock client
+export const supabase: SupabaseClient | ReturnType<typeof createMockClient> = isSupabaseConfigured
+  ? createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
+  })
+  : createMockClient();
 

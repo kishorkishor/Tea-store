@@ -50,7 +50,7 @@ export default function AdminDashboard() {
                 .select('product_id')
                 .lt('stock_quantity', 10);
 
-            const uniqueLowStockProducts = new Set(lowStockVariants?.map(v => v.product_id) || []);
+            const uniqueLowStockProducts = new Set(lowStockVariants?.map((v: { product_id: string }) => v.product_id) || []);
 
             setStats({
                 totalOrders: totalOrders || 0,

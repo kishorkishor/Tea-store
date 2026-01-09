@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Check if Supabase is properly configured
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
         const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-        
+
         if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('placeholder') || supabaseAnonKey.includes('placeholder')) {
             console.warn('Supabase is not configured. Auth features will be disabled.');
             setLoading(false);
@@ -75,7 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
 
         // Get initial session
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        supabase.auth.getSession().then(({ data: { session } }: { data: { session: any } }) => {
             setUser(session?.user ?? null);
             if (session?.user) {
                 // Try to fetch profile, but don't block if it fails
@@ -84,7 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 });
             }
             setLoading(false);
-        }).catch((error) => {
+        }).catch((error: any) => {
             console.error('Error getting session:', error);
             setLoading(false);
         });
@@ -92,7 +92,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Listen for auth changes
         const {
             data: { subscription },
-        } = supabase.auth.onAuthStateChange(async (event, session) => {
+        } = supabase.auth.onAuthStateChange(async (event: any, session: any) => {
             setUser(session?.user ?? null);
             if (session?.user) {
                 // Try to fetch profile, but don't block if it fails
