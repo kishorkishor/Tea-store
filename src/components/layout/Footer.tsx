@@ -155,7 +155,7 @@ export default function Footer() {
             <div className="border-t border-primary-800 dark:border-border">
                 <div className="container-custom py-8 md:py-10">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm md:text-base text-primary-300 dark:text-muted-foreground">
-                        <p>© 2024 ChaiBari. All rights reserved. Made with ❤️ by Kishor</p>
+                        <p>© 2024 ChaiBari. All rights reserved. Crafted in the shadows by Kishor 🖤</p>
                         <div className="flex flex-col sm:flex-row items-center gap-4">
                             <span>We accept:</span>
                             <div className="flex items-center gap-3">
